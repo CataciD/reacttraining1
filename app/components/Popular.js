@@ -1,20 +1,35 @@
 var React = require('react');
 
 class Popular extends React.Component{
-  render() {
-    var languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python'];
-    return (
-      <ul className='languages'>
-        {languages.map(lang => {
-          return(
-            <li key={lang}>
-              {lang}
-            </li>
-          )
-        })}
-      </ul>
-    )
-  }
-}
+    constructor (props) {
+        super(props);
+        this.state = {
+            selectedLanguage: 'All'
+        };
+
+        this.updateLanguage = this.updateLanguage.bind(this);
+    }
+    updateLanguage(lang) {
+        console.log('selected: '+lang);
+        this.setState(() => { return {selectedLanguage: lang}});
+    }
+    render() {
+        var languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python'];
+        return (
+          <ul className='languages'>
+            {languages.map((lang) => {
+              return(
+                <li
+                    style={lang === this.state.selectedLanguage ? { color: '#d0021b'} : null}
+                    onClick={this.updateLanguage.bind(null, lang)}
+                    key={lang}>
+                        {lang}
+                </li>
+              )
+          })}
+          </ul>
+        )
+      }
+    }
 
 module.exports = Popular;
